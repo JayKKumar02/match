@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play HLS Stream</title>
+    <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+
+    <video id="my-video" class="video-js" controls autoplay preload="auto" width="640" height="360" data-setup="{}">
+       
+    </video>
+
+
+    <div id="resolution-buttons">
+        <!-- Buttons for each resolution variant -->
+        <button onclick="playVideo('640x360')">640x360</button>
+        <button onclick="playVideo('854x480')">854x480</button>
+        <button onclick="playVideo('1280x720')">1280x720</button>
+        <button onclick="playVideo('1920x1080')">1920x1080</button>
+        <button onclick="playCustomVideo()">Custom Video</button>
+
+        <!-- Button for lowest latency -->
+        <button id="goLive" onclick="seekLowestLatency()">Go Live</button>
+    </div>
+
+    <textarea id="log-textarea" readonly></textarea>
+
+    <script src="https://vjs.zencdn.net/7.17.0/video.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.17.2/videojs-contrib-hls.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

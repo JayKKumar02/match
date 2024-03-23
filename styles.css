@@ -1,0 +1,38 @@
+body.dark-theme {
+    background-color: #1e1e1e; /* Dark background color */
+    color: #fff; /* Text color */
+}
+
+button {
+    background-color: #333; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove button border */
+    padding: 10px 20px; /* Add padding */
+    margin: 5px; /* Add margin */
+    cursor: pointer; /* Change cursor on hover */
+}
+
+button:hover {
+    background-color: #555; /* Darker background color on hover */
+}
+
+textarea#log-textarea {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 400px;
+    height: 100px;
+    display: none;
+    border: 1px solid #555; /* Add a border */
+    background-color: #333; /* Set background color to dark gray */
+    color: #fff; /* Set text color to white */
+    padding: 10px; /* Add padding for content */
+    font-family: Arial, sans-serif; /* Use a sans-serif font */
+    resize: none; /* Disable textarea resizing */
+    overflow-y: auto; /* Add vertical scrollbar when content exceeds height */
+}
+#goLive {
+    display: none; /* Hide the "Go Live" button initially */
+    background-color: #ff0000; /* Red background color */
+}
+
