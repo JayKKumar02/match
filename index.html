@@ -1,38 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play HLS Stream</title>
-    <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic HLS Playback</title>
+  <!-- Include Video.js CSS -->
+  <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
 </head>
+<body>
 
-<body class="dark-theme">
+<video id="my-video" class="video-js" controls preload="auto" width="640" height="360" data-setup="{}">
+  <!-- Fallback for browsers that don't support HLS -->
+  <p class="vjs-no-js">
+    To view this video please enable JavaScript, and consider upgrading to a
+    web browser that supports HTML5 video
+  </p>
+</video>
 
-    <video id="my-video" class="video-js" controls autoplay preload="auto" width="640" height="360" data-setup="{}">
-       
-    </video>
+<!-- Include Video.js library -->
+<script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
+
+<script>
+  // Create video player
+  var player = videojs('my-video');
+  var sequenceNumber = 5425;
+
+  // Initial m3u8 data with 3 segments
+  var m3u8Data = `#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:4
+#EXT-X-MEDIA-SEQUENCE:5423
+
+#EXTINF:4.000,
+https://prod-sports-eng.jiocinema.com/hls/live/2100306/hd_akamai_iosmob_avc_eng_ipl_s2_m2230324/master_480p_05423.ts
+#EXTINF:4.000,
+https://prod-sports-eng.jiocinema.com/hls/live/2100306/hd_akamai_iosmob_avc_eng_ipl_s2_m2230324/master_480p_05424.ts
+#EXTINF:4.000,
+https://prod-sports-eng.jiocinema.com/hls/live/2100306/hd_akamai_iosmob_avc_eng_ipl_s2_m2230324/master_480p_05425.ts`;
+
+  // Load initial HLS stream
+  player.src({
+    src: 'data:application/x-mpegURL,' + encodeURIComponent(m3u8Data),
+    type: 'application/x-mpegURL'
+  });
+
+  // Function to dynamically add a new segment to the m3u8 playlist
+  function addSegment() {
+    sequenceNumber++;
+    var newSegmentUrl = `https://prod-sports-eng.jiocinema.com/hls/live/2100306/hd_akamai_iosmob_avc_eng_ipl_s2_m2230324/master_480p_0${sequenceNumber}.ts`;
+
+    // Append new segment to m3u8 data
+    m3u8Data += `\n#EXTINF:4.000,\n${newSegmentUrl}`;
+
+    // Update the player's playlist
+    // Update the player's playlist without interrupting playback
+player.src({
+  src: 'data:application/x-mpegURL,' + encodeURIComponent(m3u8Data),
+  type: 'application/x-mpegURL',
+  append: true // Append new segments to the existing playlist
+});
 
 
-    <div id="resolution-buttons">
-        <!-- Buttons for each resolution variant -->
-        <button onclick="playVideo('640x360')">640x360</button>
-        <button onclick="playVideo('854x480')">854x480</button>
-        <button onclick="playVideo('1280x720')">1280x720</button>
-        <button onclick="playVideo('1920x1080')">1920x1080</button>
-        <button onclick="playCustomVideo()">Custom Video</button>
+    // Play the video
+    player.play();
 
-        <!-- Button for lowest latency -->
-        <button id="goLive" onclick="seekLowestLatency()">Go Live</button>
-    </div>
+    // Schedule next segment addition
+    setTimeout(addSegment, 4000); // Add a new segment every 4 seconds
+  }
 
-    <textarea id="log-textarea" readonly></textarea>
+  // Start adding segments
+  addSegment();
+</script>
 
-    <script src="https://vjs.zencdn.net/7.17.0/video.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.17.2/videojs-contrib-hls.min.js"></script>
-    <script src="script.js"></script>
 </body>
-
 </html>
