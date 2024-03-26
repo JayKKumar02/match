@@ -1,1 +1,1 @@
-https://prod-sports-eng.jiocinema.com/hls/live/2100299/hd_akamai_iosmob_avc_eng_ipl_s1_m1250324/master_480p.m3u8
+https://prod-sports-eng.jiocinema.com/hls/live/2100299/hd_akamai_iosmob_avc_eng_ipl_s1_m1260324/master_720p.m3u8
